@@ -73,6 +73,7 @@ button:hover, select:hover, #year_buttons a:hover {
 
 @media only screen and (max-width: 900px) {
 	#body {
+		padding: 30px;
 		width: 80%;
 	}
 } 
