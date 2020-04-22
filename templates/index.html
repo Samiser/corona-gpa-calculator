@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<title>GPA calc</title>
+</head>
+<body>
+	<div id=body>
+		<div>
+			<h1>Corona GPA Calculator</h1>
+		</div>
+		<div>
+			<div id="grade_form">
+			{% if year == "year3" or year == "year4" %}
+			{% if year == "year3" %}
+				<h2>3rd Year</h2>
+				{% set sections = {
+						"want": {"header": "Grades u want", "count": 3},
+						"current": {"header": "Current Grades", "count": 3}
+					}
+				%}
+			{% elif year == "year4" %}
+				<h2>4th Year</h2>
+				{% set sections = {
+						"old": {"header": "3rd Year Grades", "count": 6},
+						"want": {"header": "Grades u want", "count": 3},
+						"current": {"header": "Current 4th Year Grades", "count": 3}
+					}
+				%}
+			{% endif %}
+				<form action="/{{ year }}" method="post" id="form">
+				{% for section in sections %}
+					<h3>{{ sections[section]["header"] }}</h3>
+					{% for i in range(sections[section].count) %}
+					<p>
+						<label>Module {{ i }}:</label>
+						<select id="{{ section }}_{{ i }}" name="{{ section }}_{{ i }}">
+							<option value = "4.5">A+</option>
+							<option value = "4">A</option>
+							<option value = "3.5">B+</option>
+							<option value = "3">B</option>
+							<option value = "2.5">C+</option>
+							<option value = "2">C</option>
+							<option value = "1.5">D+</option>
+							<option value = "1">D</option>
+							<option value = "0.5">MF</option>
+						</select>
+					</p>
+					{% endfor %}	
+				{% endfor %}	
+				<input type="hidden" id="year" name="year" value="{{ year }}"/>
+				</form>
+			</div>
+			<div id="results">
+				<button onclick=refresh()>Calculate</button>
+				<p>Your old GPA would have been <span id="old_gpa"></span></p>
+				<p>Your new GPA would be <span id="new_gpa"></span></p>
+			</div>
+		{% else %}
+			<div id="year_buttons">
+				<a href="year3">Third Year</a>
+				<a href="year4">Fourth Year</a>
+			</div>
+		{% endif %}
+		</div>
+	</div>
+	<script>
+	let update_elements = function(data) {
+			document.getElementById("old_gpa").textContent = data["old_gpa"];
+			document.getElementById("new_gpa").textContent = data["new_gpa"];
+	}
+
+	let refresh = function() {
+		const data = new URLSearchParams();
+		for (const pair of new FormData(document.getElementById("form"))) {
+			data.append(pair[0], pair[1]);
+		}
+
+		fetch("/{{year}}", {
+			method: 'post',
+			body: data,
+		})
+			.then(response => response.json())
+			.then(data => update_elements(data))
+	}
+	</script>
+</body>
+</html>
