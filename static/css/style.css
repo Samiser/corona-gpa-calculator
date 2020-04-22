@@ -26,7 +26,11 @@ body {
 
 a {
 	text-decoration: none;
-	color: var(--fg-1);
+	color: var(--bg-1);
+}
+
+a:hover {
+	filter: brightness(0.9);
 }
 
 h1 {
@@ -69,6 +73,10 @@ button:hover, select:hover, #year_buttons a:hover {
 
 #results p span {
 	font-size: 30px;
+}
+
+#about {
+	text-align: left;
 }
 
 @media only screen and (max-width: 900px) {

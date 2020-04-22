@@ -15,14 +15,14 @@
 			{% if year == "year3" or year == "year4" %}
 			{% if year == "year3" %}
 				{% set sections = {
-						"want": {"header": "Grades You'd Like", "count": 3},
+						"want": {"header": "Predicted Grades", "count": 3},
 						"current": {"header": "Current Grades", "count": 3}
 					}
 				%}
 			{% elif year == "year4" %}
 				{% set sections = {
 						"old": {"header": "3rd Year Grades", "count": 6},
-						"want": {"header": "Grades You'd Like", "count": 3},
+						"want": {"header": "Predicted 4th Year Grades", "count": 3},
 						"current": {"header": "Current 4th Year Grades", "count": 3}
 					}
 				%}
@@ -61,8 +61,29 @@
 			</div>
 		{% else %}
 			<div id="year_buttons">
+				<h2>Choose Your Year:</h2>
 				<a href="year3">Third Year</a>
 				<a href="year4">Fourth Year</a>
+			</div>
+			<div id="about">
+				<h2>What is this?</h2>
+				<p>This is a simple web app you can use to calculate your
+					GPA based on the new Abertay coronavirus policy. You can find
+					a more detailed explanation of what the policy actually means
+					<a href="https://intranet.abertay.ac.uk/documents/forms/travel/coronaviruscovid-19/covid-19studentguidance/fairassessmentduringcovid-19/">here</a>.</p>
+					
+					<p>To use this site, just select your year, fill out the data,
+					and hit calculate. It will then tell you what your GPA and
+					degree classification would be before and after the policy
+					changes. For the predicted grades, just try and guess what you
+					might get for this semester.</p>
+
+					<p>If you run into any issues while using this site feel free to
+					email me at <a href="mailto:me@samiser.xyz">me@samiser.xyz</a> or
+					dm me on twitter <a href="https://twitter.com/Sam1ser">@Sam1ser</a>.</p>
+
+				<p>Also, if you're interested, the source code of this project
+					can be found <a href="https://github.com/Samiser/corona-gpa-calculator">here</a>.</p>
 			</div>
 		{% endif %}
 		</div>
