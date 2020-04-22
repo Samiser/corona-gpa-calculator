@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
 <head>
-	<title>GPA calc</title>
+	<title>GPA calculator</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
 	<div id=body>
@@ -12,27 +14,25 @@
 			<div id="grade_form">
 			{% if year == "year3" or year == "year4" %}
 			{% if year == "year3" %}
-				<h2>3rd Year</h2>
 				{% set sections = {
-						"want": {"header": "Grades u want", "count": 3},
+						"want": {"header": "Grades You'd Like", "count": 3},
 						"current": {"header": "Current Grades", "count": 3}
 					}
 				%}
 			{% elif year == "year4" %}
-				<h2>4th Year</h2>
 				{% set sections = {
 						"old": {"header": "3rd Year Grades", "count": 6},
-						"want": {"header": "Grades u want", "count": 3},
+						"want": {"header": "Grades You'd Like", "count": 3},
 						"current": {"header": "Current 4th Year Grades", "count": 3}
 					}
 				%}
 			{% endif %}
 				<form action="/{{ year }}" method="post" id="form">
 				{% for section in sections %}
-					<h3>{{ sections[section]["header"] }}</h3>
+					<h2>{{ sections[section]["header"] }}</h2>
 					{% for i in range(sections[section].count) %}
 					<p>
-						<label>Module {{ i }}:</label>
+						<label>Module {{ i + 1 }}:</label>
 						<select id="{{ section }}_{{ i }}" name="{{ section }}_{{ i }}">
 							<option value = "4.5">A+</option>
 							<option value = "4">A</option>
@@ -48,12 +48,16 @@
 					{% endfor %}	
 				{% endfor %}	
 				<input type="hidden" id="year" name="year" value="{{ year }}"/>
+				<!--input type="submit"></input-->
 				</form>
-			</div>
-			<div id="results">
 				<button onclick=refresh()>Calculate</button>
-				<p>Your old GPA would have been <span id="old_gpa"></span></p>
-				<p>Your new GPA would be <span id="new_gpa"></span></p>
+			</div>
+			<div id="results" class="hidden">
+				<h2>Results</h2>
+				<p>Your old GPA would have been <span id="old_gpa"></span> 
+						averaging a <span id="old_class"></span> class degree</p>
+				<p>Your new GPA would be <span id="new_gpa"></span>
+						averaging a <span id="new_class"></span> class degree</p>
 			</div>
 		{% else %}
 			<div id="year_buttons">
@@ -65,8 +69,11 @@
 	</div>
 	<script>
 	let update_elements = function(data) {
+			document.getElementById("results").classList.remove("hidden");
 			document.getElementById("old_gpa").textContent = data["old_gpa"];
+			document.getElementById("old_class").textContent = data["old_class"];
 			document.getElementById("new_gpa").textContent = data["new_gpa"];
+			document.getElementById("new_class").textContent = data["new_class"];
 	}
 
 	let refresh = function() {

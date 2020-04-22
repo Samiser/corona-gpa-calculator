@@ -1,0 +1,78 @@
+:root {
+	--bg-1: #43aa8b;
+	--bg-2: #254441;
+	--bg-3: #272d2d;
+	--fg-1: #d1faff;
+}
+
+body {
+	font-family: Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+	color: var(--fg-1);
+	background-color: var(--bg-1);
+	/* Firefox */
+  display: -moz-box;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  /* Safari and Chrome */
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  /* W3C */
+  display: box;
+  box-pack: center;
+  box-align: center;
+	font-size: 20px;
+}
+
+a {
+	text-decoration: none;
+	color: var(--fg-1);
+}
+
+h1 {
+	font-size: 50px;
+}
+
+#body {
+	background-color: var(--bg-2);
+	width: 700px;
+	padding: 50px;
+	margin: 0 auto;
+	border-radius: 10px;
+	vertical-align: top;
+	text-align: center;
+}
+
+button, select, #year_buttons a {
+	font-family: Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+	font-size: 20px;
+	background:none;
+  background:transparent;
+	-webkit-appearance: none;
+  appearance:none;
+	background-color: var(--bg-1);
+	color: var(--fg-1);
+	border: none;
+	border-radius: 5px;
+	padding: 7px;
+}
+
+button:hover, select:hover, #year_buttons a:hover {
+	filter: brightness(0.9);
+	cursor: pointer;
+}
+
+.hidden {
+	visibility: hidden;
+	height: 0;
+}
+
+#results p span {
+	font-size: 30px;
+}
+
+@media only screen and (max-width: 900px) {
+	#body {
+		width: 80%;
+	}
+} 
