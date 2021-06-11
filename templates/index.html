@@ -15,15 +15,13 @@
 			{% if year == "year3" or year == "year4" %}
 			{% if year == "year3" %}
 				{% set sections = {
-						"want": {"header": "Predicted Grades", "count": 3},
-						"current": {"header": "Current Grades", "count": 3}
+						"current": {"header": "Current Grades", "count": 6}
 					}
 				%}
 			{% elif year == "year4" %}
 				{% set sections = {
 						"old": {"header": "3rd Year Grades", "count": 6},
-						"want": {"header": "Predicted 4th Year Grades", "count": 3},
-						"current": {"header": "Current 4th Year Grades", "count": 3}
+						"current": {"header": "4th Year Grades", "count": 6}
 					}
 				%}
 			{% endif %}

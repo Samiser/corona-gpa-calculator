@@ -31,8 +31,8 @@ def form(year=None):
 
 @app.route('/<year>', methods=['POST'])
 def form_post(year=None):
-    data = {"grades": [], "wanted_grades": [], "old_gpa": 0, "new_gpa": 0, "old_class":"", "new_class":""}
-    sections = {"current": 3}
+    data = {"grades": [], "old_gpa": 0, "new_gpa": 0, "old_class":"", "new_class":""}
+    sections = {"current": 6}
 
     if year == "year4":
         sections["old"] = 6
@@ -41,10 +41,8 @@ def form_post(year=None):
         for section in sections:
             for i in range(sections[section]):
                 data["grades"].append(request.form[section + "_" + str(i)])
-        for i in range(3):
-            data["wanted_grades"].append(request.form["want_" + str(i)])
-        data["old_gpa"] = old_gpa(list(map(float, data["grades"] + data["wanted_grades"])))
-        data["new_gpa"] = new_gpa(list(map(float, data["grades"] + data["wanted_grades"])))
+        data["old_gpa"] = old_gpa(list(map(float, data["grades"])))
+        data["new_gpa"] = new_gpa(list(map(float, data["grades"])))
         data["old_class"] = calc_class(float(data["old_gpa"]))
         data["new_class"] = calc_class(float(data["new_gpa"]))
         return data
