@@ -32,11 +32,23 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           python = pkgs.${pythonAttr};
-        in
-        {
-          default = python.pkgs.buildPythonApplication (
+          app = python.pkgs.buildPythonApplication (
             project.renderers.buildPythonPackage { inherit python; }
           );
+        in
+        {
+          default = app;
+          dockerImage = pkgs.dockerTools.buildLayeredImage {
+            name = "corona-gpa-calculator";
+            tag = "latest";
+            contents = [ app ];
+            config = {
+              Cmd = [ "${app}/bin/corona-gpa-calculator" ];
+              ExposedPorts = {
+                "5000/tcp" = {};
+              };
+            };
+          };
         }
       );
 
