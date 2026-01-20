@@ -29,7 +29,12 @@ jobs:
         run: nix build .#dockerImage
 
       - name: Load image into Docker
-        run: docker load < result
+        id: load
+        run: |
+          LOADED=$(docker load < result)
+          echo "$LOADED"
+          IMAGE_TAG=$(echo "$LOADED" | sed 's/Loaded image: //')
+          echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -38,15 +43,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get image name from result
-        id: image-name
-        run: |
-          IMAGE_TAG=$(docker images --format "{{.Repository}}:{{.Tag}}" | head -1)
-          echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
-
       - name: Tag and push image
         run: |
-          docker tag ${{ steps.image-name.outputs.tag }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          docker tag ${{ steps.image-name.outputs.tag }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker tag ${{ steps.load.outputs.tag }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          docker tag ${{ steps.load.outputs.tag }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
