@@ -48,3 +48,9 @@ def form_post(year=None):
         return data
     except Exception as e:
         return {"Error": str(e)}
+
+def main():
+    app.run(host="0.0.0.0", port=5000)
+
+if __name__ == "__main__":
+    main()

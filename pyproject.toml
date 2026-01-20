@@ -1,0 +1,16 @@
+[project]
+name = "corona-gpa-calculator"
+version = "0.1.0"
+description = "GPA calculator Flask app"
+authors = []
+requires-python = ">=3.9"
+dependencies = [
+    "flask>=1.1.2",
+]
+
+[project.scripts]
+corona-gpa-calculator = "app:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
